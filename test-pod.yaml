@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod-dumb-1
+spec:
+  schedulerName: dumb-scheduler
+  containers:
+  - name: busybox
+    image: busybox:latest
+    command: ["sleep", "3600"]
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod-dumb-2
+spec:
+  schedulerName: dumb-scheduler
+  containers:
+    - name: busybox
+      image: busybox:latest
+      command: ["sleep", "3600"]
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod-dumb-3
+spec:
+  schedulerName: dumb-scheduler
+  containers:
+    - name: busybox
+      image: busybox:latest
+      command: ["sleep", "3600"]
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod-dumb-4
+spec:
+  schedulerName: dumb-scheduler
+  containers:
+    - name: busybox
+      image: busybox:latest
+      command: ["sleep", "3600"]

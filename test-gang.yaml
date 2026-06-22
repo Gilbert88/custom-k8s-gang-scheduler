@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gang-worker-1
+  annotations:
+    gang-scheduler.io/pod-group: "distributed-job-1"
+spec:
+  schedulerName: dumb-scheduler
+  containers:
+  - name: worker
+    image: busybox:latest
+    command: ["sleep", "3600"]
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gang-worker-2
+  annotations:
+    gang-scheduler.io/pod-group: "distributed-job-1"
+spec:
+  schedulerName: dumb-scheduler
+  containers:
+  - name: worker
+    image: busybox:latest
+    command: ["sleep", "3600"]
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gang-worker-3
+  annotations:
+    gang-scheduler.io/pod-group: "distributed-job-1"
+spec:
+  schedulerName: dumb-scheduler
+  containers:
+  - name: worker
+    image: busybox:latest
+    command: ["sleep", "3600"]

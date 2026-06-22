@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dumb-scheduler
+  namespace: ${NAMESPACE}
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: dumb-scheduler
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch", "delete"]
+- apiGroups: [""]
+  resources: ["pods/binding"]
+  verbs: ["create"]
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["create", "patch"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: dumb-scheduler
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: dumb-scheduler
+subjects:
+- kind: ServiceAccount
+  name: dumb-scheduler
+  namespace: ${NAMESPACE}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dumb-scheduler
+  namespace: ${NAMESPACE}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dumb-scheduler
+  template:
+    metadata:
+      labels:
+        app: dumb-scheduler
+    spec:
+      serviceAccountName: dumb-scheduler
+      containers:
+      - name: scheduler
+        image: gilbertsong/custom-k8s-scheduler:latest
+        imagePullPolicy: Always
+        args:
+        - --scheduler-name=dumb-scheduler
+
